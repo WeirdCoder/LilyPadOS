@@ -1,0 +1,7 @@
+LilyPadOS
+
+This is a repo is made for 2015 MIT 2.014 course.  This is the software which runs and control the Lilypad system.
+
+
+Dependency:
+    LCM - MIT's Lightweight Communication and Marshalling  https://lcm-proj.github.io
