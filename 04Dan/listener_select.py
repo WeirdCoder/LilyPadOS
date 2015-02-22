@@ -1,15 +1,15 @@
 import select
 import lcm
-from lilylcm import 04Dan
+from lilylcm import 03Citrus
 
 def my_handler(channel, data):
-    msg = 04Dan.decode(data)
+    msg = 03Citrus.decode(data)
     print("Received message on channel /"%s/"" % channel)
     print("  value  = %s" % str(msg.value))
     print("")
     
 lc = lcm.LCM()
-subscription = lc.subscribe("EXAMPLE", my_handler)
+subscription = lc.subscribe("04Dan", my_handler)
 
 try:
     timeout = 1.5 # amount of time to wait, in seconds
