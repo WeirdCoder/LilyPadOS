@@ -1,7 +1,7 @@
 import sys
 import lcm
 
-from lilylcm import 04Dan
+from lilylcm import 03Citrus
 
 if len(sys.argv) < 2:
     sys.stderr.write("usage: read-log <logfile>\n")
@@ -10,8 +10,8 @@ if len(sys.argv) < 2:
 log = lcm.EventLog(sys.argv[1], "r")
 
 for event in log:
-    if event.channel == "EXAMPLE":
-        msg = 04Dan.decode(event.data)
+    if event.channel == "03Citrus":
+        msg = 03Citrus.decode(event.data)
         
         print(Message:")
         print("  value  = %s" % str(msg.value))
