@@ -14,9 +14,5 @@ for event in log:
         msg = 04Dan.decode(event.data)
         
         print(Message:")
-        print("  count  = %s" % str(msg.count))
-        print("  done   = %s" % str(msg.done))
         print("  value  = %s" % str(msg.value))
-        print("  name   = %s" % str(msg.name))
-        print("  cured  = %s" % str(msg.cured))
         print("")
