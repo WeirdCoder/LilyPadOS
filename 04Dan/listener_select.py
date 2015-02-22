@@ -9,7 +9,7 @@ def my_handler(channel, data):
     print("")
     
 lc = lcm.LCM()
-subscription = lc.subscribe("04Dan", my_handler)
+subscription = lc.subscribe("03Citrus", my_handler)
 
 try:
     timeout = 1.5 # amount of time to wait, in seconds
