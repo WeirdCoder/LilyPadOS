@@ -1,9 +1,5 @@
 package lilylcm;
 
 struct 04Dan {
-	int16_t count;
-	boolean done;
-	double value;
 	string name;
-	boolean cured;
 }

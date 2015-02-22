@@ -21,12 +21,8 @@ int64_t __lilylcm_04Dan_hash_recursive(const __lcm_hash_ptr *p)
     cp.v = (void*)__lilylcm_04Dan_get_hash;
     (void) cp;
 
-    int64_t hash = (int64_t)0x86111a0780ffed18LL
-         + __int16_t_hash_recursive(&cp)
-         + __boolean_hash_recursive(&cp)
-         + __double_hash_recursive(&cp)
+    int64_t hash = (int64_t)0x90df9b84b9cebd12LL
          + __string_hash_recursive(&cp)
-         + __boolean_hash_recursive(&cp)
         ;
 
     return (hash<<1) + ((hash>>63)&1);
@@ -48,19 +44,7 @@ int __lilylcm_04Dan_encode_array(void *buf, int offset, int maxlen, const lilylc
 
     for (element = 0; element < elements; element++) {
 
-        thislen = __int16_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].count), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __boolean_encode_array(buf, offset + pos, maxlen - pos, &(p[element].done), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __double_encode_array(buf, offset + pos, maxlen - pos, &(p[element].value), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
         thislen = __string_encode_array(buf, offset + pos, maxlen - pos, &(p[element].name), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __boolean_encode_array(buf, offset + pos, maxlen - pos, &(p[element].cured), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
     }
@@ -86,15 +70,7 @@ int __lilylcm_04Dan_encoded_array_size(const lilylcm_04Dan *p, int elements)
     int size = 0, element;
     for (element = 0; element < elements; element++) {
 
-        size += __int16_t_encoded_array_size(&(p[element].count), 1);
-
-        size += __boolean_encoded_array_size(&(p[element].done), 1);
-
-        size += __double_encoded_array_size(&(p[element].value), 1);
-
         size += __string_encoded_array_size(&(p[element].name), 1);
-
-        size += __boolean_encoded_array_size(&(p[element].cured), 1);
 
     }
     return size;
@@ -111,19 +87,7 @@ int __lilylcm_04Dan_decode_array(const void *buf, int offset, int maxlen, lilylc
 
     for (element = 0; element < elements; element++) {
 
-        thislen = __int16_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].count), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __boolean_decode_array(buf, offset + pos, maxlen - pos, &(p[element].done), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __double_decode_array(buf, offset + pos, maxlen - pos, &(p[element].value), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
         thislen = __string_decode_array(buf, offset + pos, maxlen - pos, &(p[element].name), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __boolean_decode_array(buf, offset + pos, maxlen - pos, &(p[element].cured), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
     }
@@ -135,15 +99,7 @@ int __lilylcm_04Dan_decode_array_cleanup(lilylcm_04Dan *p, int elements)
     int element;
     for (element = 0; element < elements; element++) {
 
-        __int16_t_decode_array_cleanup(&(p[element].count), 1);
-
-        __boolean_decode_array_cleanup(&(p[element].done), 1);
-
-        __double_decode_array_cleanup(&(p[element].value), 1);
-
         __string_decode_array_cleanup(&(p[element].name), 1);
-
-        __boolean_decode_array_cleanup(&(p[element].cured), 1);
 
     }
     return 0;
@@ -175,15 +131,7 @@ int __lilylcm_04Dan_clone_array(const lilylcm_04Dan *p, lilylcm_04Dan *q, int el
     int element;
     for (element = 0; element < elements; element++) {
 
-        __int16_t_clone_array(&(p[element].count), &(q[element].count), 1);
-
-        __boolean_clone_array(&(p[element].done), &(q[element].done), 1);
-
-        __double_clone_array(&(p[element].value), &(q[element].value), 1);
-
         __string_clone_array(&(p[element].name), &(q[element].name), 1);
-
-        __boolean_clone_array(&(p[element].cured), &(q[element].cured), 1);
 
     }
     return 0;

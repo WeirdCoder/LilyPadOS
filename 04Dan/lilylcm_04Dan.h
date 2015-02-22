@@ -18,11 +18,7 @@ extern "C" {
 typedef struct _lilylcm_04Dan lilylcm_04Dan;
 struct _lilylcm_04Dan
 {
-    int16_t    count;
-    int8_t     done;
-    double     value;
     char*      name;
-    int8_t     cured;
 };
 
 /**
