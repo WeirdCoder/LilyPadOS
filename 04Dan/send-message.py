@@ -5,10 +5,6 @@ from lilylcm import 04Dan
 lc = lcm.LCM()
 
 msg = 04Dan()
-msg.count = int #value
-msg.done = boolean #value
-msg.value = double #value
-msg.name = str #value
-msg.cured = boolean #value
+msg.name = str "Dark 'n Chunky"
 
-lc.publish("EXAMPLE", msg.encode())
+lc.publish("04Dan", msg.encode())
