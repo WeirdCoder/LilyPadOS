@@ -1,6 +1,0 @@
-package lilylcm;
-
-struct L05Ebola
-{
-    boolean cured;
-}
