@@ -1,7 +1,7 @@
 import lcm
 import time
 
-from ../lcmtype import L04Dan
+from lcmtype import L04Dan
 
 lc = lcm.LCM()
 
