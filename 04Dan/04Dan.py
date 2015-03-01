@@ -1,7 +1,7 @@
 import lcm
 import time
 
-import L04Dan
+from lilylcm import L04Dan
 
 lc = lcm.LCM()
 
@@ -9,11 +9,10 @@ msg = L04Dan()
 msg.name = "Dark n Chunky"
 
 def my_handler(channel, data):
-  print("Received message from 04")
+  print("Received message from %s" % channel)
+  lc.publish("04DAN", msg.encode())
   
-subscription = lc.subscribe("04DAN", myhandler)
-  
-lc.publish("04DAN", msg.encode())
+subscription = lc.subscribe("05EBOLA", my_handler)
   
 try:
   while True:
