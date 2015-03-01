@@ -1,5 +1,5 @@
 package lilylcm;
 
-struct 04Dan {
+struct L04Dan {
 	string name;
 }
