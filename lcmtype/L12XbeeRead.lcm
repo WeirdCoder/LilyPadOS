@@ -1,5 +1,5 @@
 package lilylcm;
 
-struct L12XbeeRead{
+struct L12XbeeRead {
 	string readin;
 }

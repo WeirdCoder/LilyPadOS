@@ -1,5 +1,5 @@
 package lilylcm;
 
-struct L16ChargerCommand{
+struct L16ChargerCommand {
 	string targetState;
 }

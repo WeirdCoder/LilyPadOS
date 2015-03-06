@@ -1,5 +1,5 @@
 package lilylcm;
 
-struct L06Depth{
+struct L06Depth {
 	float depth;
 }

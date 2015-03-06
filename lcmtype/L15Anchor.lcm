@@ -1,5 +1,5 @@
 package lilylcm;
 
-struct L15Anchor{
+struct L15Anchor {
 	 int8_t value;
 }

@@ -1,5 +1,5 @@
 package lilylcm;
 
-struct L18XbeeWrite{
+struct L18XbeeWrite {
 	string writeout;
 }
