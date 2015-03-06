@@ -1,5 +1,5 @@
-package lilylcm
+package lilylcm;
 
-struct L05Ebola{
-    boolean cured;
+struct L05Ebola {
+     boolean cured;
 }
