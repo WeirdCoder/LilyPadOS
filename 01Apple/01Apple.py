@@ -1,19 +1,17 @@
 import lcm
 import time
 
-from lilylcm05 import L05Ebola
+from lilylcm import L01Apple 
 
 lc = lcm.LCM()
 
-msg = L05Ebola()
+msg = L01Apple()
 msg.cured = True
 
 def my_handler(channel, data):
-   print("Received message from 04!")
+   lc.publish("01Apple",msg.encode())
 
-subscription = lc.subscribe("04DAN",my_handler)
-
-lc.publish("05EBOLA",msg.encode())
+subscription = lc.subscribe("05Ebola",my_handler)
 
 try:
     while True:
