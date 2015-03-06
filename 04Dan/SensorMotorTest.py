@@ -14,10 +14,11 @@ try:
   while True:
     i = GPIO.input(16)
     port.readline()
-/*    if i == 0:
-      pwm.ChangeDutyCycle(20.0 / 10.0 + 2.5)
-    else:
-      pwm.ChangeDutyCycle(100.0 / 10.0 + 2.5)*/
+##    if i == 0:
+##      pwm.ChangeDutyCycle(20.0 / 10.0 + 2.5)
+##    else:
+##      pwm.ChangeDutyCycle(100.0 / 10.0 + 2.5)
+    
     
 except KeyboardInterrupt:
   GPIO.cleanup()
