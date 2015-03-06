@@ -10,5 +10,5 @@ try:
     i = GPIO.input(16)
     print(i)
     delay(1000)
-except:
+except KeyboardInterrupt:
   GPIO.cleanup()
