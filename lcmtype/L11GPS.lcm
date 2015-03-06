@@ -1,0 +1,7 @@
+package lilylcm;
+
+struct L11GPS{
+	float longitude;
+	float latitude;
+}
+

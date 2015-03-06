@@ -1,0 +1,5 @@
+package lilylcm;
+
+struct L06Depth{
+	float depth;
+}

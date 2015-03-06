@@ -1,0 +1,6 @@
+package lilylcm;
+
+struct L10ChargerRead{
+	string state;
+	boolean charging;
+}
