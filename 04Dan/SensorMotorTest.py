@@ -1,3 +1,4 @@
+import time
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
@@ -9,6 +10,6 @@ try:
   while True:
     i = GPIO.input(16)
     print(i)
-    delay(1000)
+    time.sleep(1)
 except KeyboardInterrupt:
   GPIO.cleanup()
