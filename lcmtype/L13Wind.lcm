@@ -2,5 +2,5 @@ package lilylcm;
 
 struct L13Wind { 
 	float direction;
-	int8_tmagnitude;
+	int8_t magnitude;
 }
