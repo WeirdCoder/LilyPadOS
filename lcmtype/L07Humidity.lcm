@@ -1,5 +1,5 @@
 package lilylcm;
 
-struct L07Humidity{
+struct L07Humidity {
 	float humidity;
 }

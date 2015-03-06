@@ -1,0 +1,5 @@
+package lilylcm;
+
+struct L04Dan {
+	string name;
+}
