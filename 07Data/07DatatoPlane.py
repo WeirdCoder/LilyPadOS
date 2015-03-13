@@ -13,7 +13,7 @@ from xbee import ZigBee
 
 #Serial to LCM Mapping
 SLCMMap = ["05EBOLA","State","Heading", "GPS", "Wind"]
-PREFIX = "PLANE_"
+PREFIX = "POD_"
 #Setup Handler for LCM
 lc = lcm.LCM()
 channelDB = dict()
