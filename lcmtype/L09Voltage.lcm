@@ -1,5 +1,5 @@
 package lilylcm;
 
 struct L09Voltage {
-	int8_t analogValue[8];
+	int8_t analogValue[4];
 }
