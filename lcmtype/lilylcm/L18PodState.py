@@ -9,49 +9,53 @@ except ImportError:
     from io import BytesIO
 import struct
 
-class L09Voltage(object):
-    __slots__ = ["analogValue"]
+class L18PodState(object):
+    __slots__ = ["state"]
 
     def __init__(self):
-        self.analogValue = [ 0 for dim0 in range(4) ]
+        self.state = ""
 
     def encode(self):
         buf = BytesIO()
-        buf.write(L09Voltage._get_packed_fingerprint())
+        buf.write(L18PodState._get_packed_fingerprint())
         self._encode_one(buf)
         return buf.getvalue()
 
     def _encode_one(self, buf):
-        buf.write(struct.pack('>4b', *self.analogValue[:4]))
+        __state_encoded = self.state.encode('utf-8')
+        buf.write(struct.pack('>I', len(__state_encoded)+1))
+        buf.write(__state_encoded)
+        buf.write(b"\0")
 
     def decode(data):
         if hasattr(data, 'read'):
             buf = data
         else:
             buf = BytesIO(data)
-        if buf.read(8) != L09Voltage._get_packed_fingerprint():
+        if buf.read(8) != L18PodState._get_packed_fingerprint():
             raise ValueError("Decode error")
-        return L09Voltage._decode_one(buf)
+        return L18PodState._decode_one(buf)
     decode = staticmethod(decode)
 
     def _decode_one(buf):
-        self = L09Voltage()
-        self.analogValue = struct.unpack('>4b', buf.read(4))
+        self = L18PodState()
+        __state_len = struct.unpack('>I', buf.read(4))[0]
+        self.state = buf.read(__state_len)[:-1].decode('utf-8', 'replace')
         return self
     _decode_one = staticmethod(_decode_one)
 
     _hash = None
     def _get_hash_recursive(parents):
-        if L09Voltage in parents: return 0
-        tmphash = (0x128be18524f70c0) & 0xffffffffffffffff
+        if L18PodState in parents: return 0
+        tmphash = (0x4c9c80a6adce9864) & 0xffffffffffffffff
         tmphash  = (((tmphash<<1)&0xffffffffffffffff)  + (tmphash>>63)) & 0xffffffffffffffff
         return tmphash
     _get_hash_recursive = staticmethod(_get_hash_recursive)
     _packed_fingerprint = None
 
     def _get_packed_fingerprint():
-        if L09Voltage._packed_fingerprint is None:
-            L09Voltage._packed_fingerprint = struct.pack(">Q", L09Voltage._get_hash_recursive([]))
-        return L09Voltage._packed_fingerprint
+        if L18PodState._packed_fingerprint is None:
+            L18PodState._packed_fingerprint = struct.pack(">Q", L18PodState._get_hash_recursive([]))
+        return L18PodState._packed_fingerprint
     _get_packed_fingerprint = staticmethod(_get_packed_fingerprint)
 

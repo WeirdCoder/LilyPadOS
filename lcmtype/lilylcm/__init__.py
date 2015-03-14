@@ -17,4 +17,6 @@ from .L13Wind import L13Wind
 from .L14LEDs import L14LEDs
 from .L15Anchor import L15Anchor
 from .L16ChargerCommand import L16ChargerCommand
-from .L18XbeeWrite import L18XbeeWrite
+from .L19MagnetCommand import L19MagnetCommand
+from .L20CompassHeading import L20CompassHeading
+from .L18PodState import L18PodState
