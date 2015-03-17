@@ -6,7 +6,7 @@ from lilylcm import L01Apple
 lc = lcm.LCM()
 
 msg = L01Apple()
-msg.cured = True
+msg.count = True
 
 def my_handler(channel, data):
    lc.publish("01Apple",msg.encode())

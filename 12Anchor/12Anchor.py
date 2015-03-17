@@ -42,27 +42,3 @@ except KeyboardInterrupt: ##if you press control+C in terminal, it will go here
 
 
 
-
-
-"""
-
-while (True):
-  # Control the servo according to the depth 
-	
-
-
-  time.sleep(1)
-  pwm.setPWM(0, 0, servoMax)
-  time.sleep(1)
-def motorcontrol(depth)
-
-try:
-	while True:
-		lc.handle()
-	except KeyboardInterrupt:
-		pass
-
-lc.unsubscribe(subscription)
-servo.stop_servo(servoChannel)
-
- 
