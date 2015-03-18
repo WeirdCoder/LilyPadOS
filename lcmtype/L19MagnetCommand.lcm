@@ -1,6 +1,0 @@
-package lilylcm;
-
-struct L19MagnetCommand {
-    boolean switch;
-}
-
