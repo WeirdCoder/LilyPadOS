@@ -16,6 +16,13 @@ messageSentMenu = menu.Menu('Test Message sent')
 #Failure Menu
 failureMenu = menu.Menu('Message not Received.  Please test if you are broadcasting at the right Channel')
 
+'''LCM Channel Publish With Menu Return
+
+'''
+def lcmPublishtest(channelName, lcmType, msg):
+    lc.publish(channelName,lcmType.encode(msg))
+    messageSentMenu.open()
+
 '''LCM Channel listener Function
 A function To test whether a LCM data is broadcasted, using multithreading.
 '''
@@ -69,6 +76,7 @@ dataTransferMenu.addOptions(options)
 #Antenna Menu
 antennaMenu = menu.Menu('Anetenna Box Menu')
 options = [{"name":'Test GPS Signal',"function":lambda : lcmListenerTest('POD_GPS',L11GPS,5)},
+        {"name":'Test Compass Signal',"function":lambda : lcmListenerTest('POD_Heading',L20CompassHeading,5)},
         {"name":'Test Wind Sensor Signal',"function":lambda : lcmListenerTest('POD_Wind',L13Wind,5)},
         {"name":'return to Main Menu',"function":mainMenu.open}]
 antennaMenu.addOptions(options)
@@ -79,24 +87,43 @@ options = [{"name":'Test ADC Signal',"function":lambda : lcmListenerTest('POD_Vo
         {"name":'return to Main Menu',"function":mainMenu.open}]
 i2cMenu.addOptions(options)
 #Docking Menu
+msg1 = L19DockCommand()
+msg1.switchOn = True
+msg2 = L19DockCommand()
+msg2.switchOn = False
+msg3.L14LEDs()
+msg3.switchOn = True
+msg4.L14LEDs()
+msg4.switchOn = False
+
 dockingMenu = menu.Menu('Docking Menu')
-options = [{"name":'Test Magnet',"function":1},
-        {"name":'Test LED',"function":2},
+options = [{"name":'Turn Magnet On',"function":lambda : lcmPublishTest('POD_DockMagnet',L19DockCommand,msg1)},
+        {"name":'Turn Magnet Off',"function":lambda : lcmPublishTest('POD_DockingMagnet',L19DockCommand,msg2 )},
+        {"name":'Turn LED On',"function":lambda : lcmPublishTest('POD_DockingLED',L14LEDs,msg3)},
+        {"name":'Turn LED Off',"function":lambda: lcmPublishTest('POD_DockingLED',L14LEDs,msg4)},
         {"name":'Test Dock Detection Signal',"function":lambda : lcmListenTest('POD_DockDetect',L21DockDetect,5)},
         {"name":'return to Main Menu',"function":mainMenu.open}]
 dockingMenu.addOptions(options)
+
 #Charger Menu
 chargerMenu = menu.Menu('Charger Menu')
 options = [{"name":'Start Charging',"function":1},
         {"name":'Test Completion Signal',"function":2},
         {"name":'return to Main Menu',"function":mainMenu.open}]
 chargerMenu.addOptions(options)
+
 #Anchoring Menu
+msg1 = L15Anchor()
+msg1.value = 127
+msg2 = L15Anchor()
+msg2.value = 0
 anchoringMenu = menu.Menu('Anchoring Menu')
 options = [{"name":'Test Depth Signal Receive',"function":lambda  : lcmListenTest('POD_Depth',L06Depth,5)},
-        {"name":'Test Servo',"function":2},
+        {"name":'Test Clamp On',"function":lambda: lcmPublishTest('POD_Anchor',L15Anchor,msg1)},
+        {"name":'Test Clamp Off',"function":lambda: lcmPublishTest('POD_Anchor',L15Anchor,msg2)},
         {"name":'return to Main Menu',"function":mainMenu.open}]
 anchoringMenu.addOptions(options)
+
 #Main Menu
 options = [{"name":'StateMachine',"function":stateMachineMenu.open},
         {"name":'DataTransmission',"function":dataTransferMenu.open},
