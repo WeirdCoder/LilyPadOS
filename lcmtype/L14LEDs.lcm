@@ -1,6 +1,5 @@
 package lilylcm;
 
 struct L14LEDs {
-	int8_t rgb[3];
-	int8_t brightness;
+    boolean switchOn
 }
