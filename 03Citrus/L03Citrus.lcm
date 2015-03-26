@@ -1,0 +1,6 @@
+package lilylcm;
+
+struct L03Citrus
+{
+    double value;
+}

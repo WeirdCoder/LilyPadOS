@@ -34,28 +34,28 @@ tempI2C  = HIH6130()
 
 
 delay = 5
-count = 0
-while (count < 3):
+while (True):
     '''  Humidity  '''
     humidityI2C.read()
     msg = L07Humidity()
-    print humidityI2C.rh
-    msg.humidity = float(humidityI2C.rh)
+    msg.humidity = float(humidityI2C.rh) 
+    # print msg.humidity
     lc.publish("09I2C_HUMIDITY", msg.encode())
 
     '''ADC'''
-#    msg = L09Voltage()
- #   pga = 6144
- #   spa = 8
-  #  msg.analogValue = readADCDifferential01(pga, sps)
-  #  print readADCDifferential09(pga, sps)
-   # lc.publish("09I2C_ADC", msg.encode())
+    msg = L09Voltage()
+    pga = 6144
+    spa = 8
+    msg.analogValue = [adcI2C.readADCDifferential01(pga, spa), 1.1, 2.2, 3.3, 1.1, 2.2, 3.3, 4.4]
+    # print msg.analogValue
+    lc.publish("09I2C_ADC", msg.encode())
 
     '''Temp'''
+    tempI2C.read()
     msg = L08Temperature()
-    print tempI2C.t
     msg.temperature = float(tempI2C.t)
-   
-
+    # print msg.temperature 
     lc.publish("09I2C_TEMP", msg.encode())
-    count = count + 1
+    
+    time.sleep(delay)
+    
