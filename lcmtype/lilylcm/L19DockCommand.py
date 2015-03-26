@@ -9,7 +9,7 @@ except ImportError:
     from io import BytesIO
 import struct
 
-class L14LEDs(object):
+class L19DockCommand(object):
     __slots__ = ["switchOn"]
 
     def __init__(self):
@@ -17,7 +17,7 @@ class L14LEDs(object):
 
     def encode(self):
         buf = BytesIO()
-        buf.write(L14LEDs._get_packed_fingerprint())
+        buf.write(L19DockCommand._get_packed_fingerprint())
         self._encode_one(buf)
         return buf.getvalue()
 
@@ -29,20 +29,20 @@ class L14LEDs(object):
             buf = data
         else:
             buf = BytesIO(data)
-        if buf.read(8) != L14LEDs._get_packed_fingerprint():
+        if buf.read(8) != L19DockCommand._get_packed_fingerprint():
             raise ValueError("Decode error")
-        return L14LEDs._decode_one(buf)
+        return L19DockCommand._decode_one(buf)
     decode = staticmethod(decode)
 
     def _decode_one(buf):
-        self = L14LEDs()
+        self = L19DockCommand()
         self.switchOn = bool(struct.unpack('b', buf.read(1))[0])
         return self
     _decode_one = staticmethod(_decode_one)
 
     _hash = None
     def _get_hash_recursive(parents):
-        if L14LEDs in parents: return 0
+        if L19DockCommand in parents: return 0
         tmphash = (0xaebda0d2c51f94dc) & 0xffffffffffffffff
         tmphash  = (((tmphash<<1)&0xffffffffffffffff)  + (tmphash>>63)) & 0xffffffffffffffff
         return tmphash
@@ -50,8 +50,8 @@ class L14LEDs(object):
     _packed_fingerprint = None
 
     def _get_packed_fingerprint():
-        if L14LEDs._packed_fingerprint is None:
-            L14LEDs._packed_fingerprint = struct.pack(">Q", L14LEDs._get_hash_recursive([]))
-        return L14LEDs._packed_fingerprint
+        if L19DockCommand._packed_fingerprint is None:
+            L19DockCommand._packed_fingerprint = struct.pack(">Q", L19DockCommand._get_hash_recursive([]))
+        return L19DockCommand._packed_fingerprint
     _get_packed_fingerprint = staticmethod(_get_packed_fingerprint)
 

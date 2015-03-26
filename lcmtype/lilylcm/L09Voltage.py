@@ -13,7 +13,7 @@ class L09Voltage(object):
     __slots__ = ["analogValue"]
 
     def __init__(self):
-        self.analogValue = [ 0 for dim0 in range(8) ]
+        self.analogValue = [ 0 for dim0 in range(4) ]
 
     def encode(self):
         buf = BytesIO()
@@ -22,7 +22,7 @@ class L09Voltage(object):
         return buf.getvalue()
 
     def _encode_one(self, buf):
-        buf.write(struct.pack('>8b', *self.analogValue[:8]))
+        buf.write(struct.pack('>4b', *self.analogValue[:4]))
 
     def decode(data):
         if hasattr(data, 'read'):
@@ -36,14 +36,14 @@ class L09Voltage(object):
 
     def _decode_one(buf):
         self = L09Voltage()
-        self.analogValue = struct.unpack('>8b', buf.read(8))
+        self.analogValue = struct.unpack('>4b', buf.read(4))
         return self
     _decode_one = staticmethod(_decode_one)
 
     _hash = None
     def _get_hash_recursive(parents):
         if L09Voltage in parents: return 0
-        tmphash = (0x128be18524f70c4) & 0xffffffffffffffff
+        tmphash = (0x128be18524f70c0) & 0xffffffffffffffff
         tmphash  = (((tmphash<<1)&0xffffffffffffffff)  + (tmphash>>63)) & 0xffffffffffffffff
         return tmphash
     _get_hash_recursive = staticmethod(_get_hash_recursive)

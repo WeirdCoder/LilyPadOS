@@ -1,5 +1,6 @@
 package lilylcm;
 
-struct L14LEDs {
+struct L19DockCommand {
     boolean switchOn;
 }
+

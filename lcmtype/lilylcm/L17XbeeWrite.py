@@ -9,7 +9,7 @@ except ImportError:
     from io import BytesIO
 import struct
 
-class L18XbeeWrite(object):
+class L17XbeeWrite(object):
     __slots__ = ["writeout"]
 
     def __init__(self):
@@ -17,7 +17,7 @@ class L18XbeeWrite(object):
 
     def encode(self):
         buf = BytesIO()
-        buf.write(L18XbeeWrite._get_packed_fingerprint())
+        buf.write(L17XbeeWrite._get_packed_fingerprint())
         self._encode_one(buf)
         return buf.getvalue()
 
@@ -32,13 +32,13 @@ class L18XbeeWrite(object):
             buf = data
         else:
             buf = BytesIO(data)
-        if buf.read(8) != L18XbeeWrite._get_packed_fingerprint():
+        if buf.read(8) != L17XbeeWrite._get_packed_fingerprint():
             raise ValueError("Decode error")
-        return L18XbeeWrite._decode_one(buf)
+        return L17XbeeWrite._decode_one(buf)
     decode = staticmethod(decode)
 
     def _decode_one(buf):
-        self = L18XbeeWrite()
+        self = L17XbeeWrite()
         __writeout_len = struct.unpack('>I', buf.read(4))[0]
         self.writeout = buf.read(__writeout_len)[:-1].decode('utf-8', 'replace')
         return self
@@ -46,7 +46,7 @@ class L18XbeeWrite(object):
 
     _hash = None
     def _get_hash_recursive(parents):
-        if L18XbeeWrite in parents: return 0
+        if L17XbeeWrite in parents: return 0
         tmphash = (0xaa7b8a3cbc9cd09) & 0xffffffffffffffff
         tmphash  = (((tmphash<<1)&0xffffffffffffffff)  + (tmphash>>63)) & 0xffffffffffffffff
         return tmphash
@@ -54,8 +54,8 @@ class L18XbeeWrite(object):
     _packed_fingerprint = None
 
     def _get_packed_fingerprint():
-        if L18XbeeWrite._packed_fingerprint is None:
-            L18XbeeWrite._packed_fingerprint = struct.pack(">Q", L18XbeeWrite._get_hash_recursive([]))
-        return L18XbeeWrite._packed_fingerprint
+        if L17XbeeWrite._packed_fingerprint is None:
+            L17XbeeWrite._packed_fingerprint = struct.pack(">Q", L17XbeeWrite._get_hash_recursive([]))
+        return L17XbeeWrite._packed_fingerprint
     _get_packed_fingerprint = staticmethod(_get_packed_fingerprint)
 
