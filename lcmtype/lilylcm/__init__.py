@@ -10,7 +10,6 @@ from .L06Depth import L06Depth
 from .L07Humidity import L07Humidity
 from .L08Temperature import L08Temperature
 from .L09Voltage import L09Voltage
-from .L10ChargerRead import L10ChargerRead
 from .L11GPS import L11GPS
 from .L12XbeeRead import L12XbeeRead
 from .L13Wind import L13Wind
@@ -21,3 +20,5 @@ from .L20CompassHeading import L20CompassHeading
 from .L18PodState import L18PodState
 from .L17XbeeWrite import L17XbeeWrite
 from .L21DockDetect import L21DockDetect
+from .L10ChargerComplete import L10ChargerComplete
+from .L19DockCommand import L19DockCommand

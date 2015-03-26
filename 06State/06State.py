@@ -26,18 +26,19 @@ currentState = 0
 
 
 #Define Transition State
-def transIdle()
-    if 
+def transIdle():
+    x =1
 
 
 
 #Main Loop
 try:
-    while True:
+    print 'State Machine Start and Running'
+    #while True:
         #update with input
-        lc.handle()
+    #    lc.handle()
         #Case Switch
-        currentState = transitionModel(currentState)
+    #    currentState = transitionModel(currentState)
         #State Iteration
 
         #publish State
@@ -47,5 +48,4 @@ try:
 except Keyboardinterrupt:
     pass
 
-lc.unsubscribe()
 

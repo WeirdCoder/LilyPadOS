@@ -1,5 +1,5 @@
 package lilylcm;
 
 struct L14LEDs {
-    boolean switchOn
+    boolean switchOn;
 }
