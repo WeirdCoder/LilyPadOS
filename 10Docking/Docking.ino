@@ -15,10 +15,12 @@ void loop(){
   
   if (digitalRead(3) == HIGH){
     Serial.write("ON");
+    Serial.println("Healthy");
   }
   
   else if (digitalRead(3) == LOW){
     Serial.write("OFF");
+    Serial.println("Healthy");
   }
   
   else{
@@ -31,21 +33,25 @@ void loop(){
     if (i == "00"){
       digitalWrite(2, LOW); 
       magnetServo.write(1);
+      Serial.println("Healthy");
     }
     
     else if (i == "01"){
       digitalWrite(2, LOW); 
       magnetServo.write(90);
+      Serial.println("Healthy");
     }
     
     else if (i == "10"){
       digitalWrite(2, HIGH); 
       magnetServo.write(1);
+      Serial.println("Healthy");
     }
     
     else if (i == "11"){
       digitalWrite(2, HIGH); 
       magnetServo.write(HIGH);
+      Serial.println("Healthy");
     }
   
     else{
