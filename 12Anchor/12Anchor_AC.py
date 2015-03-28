@@ -6,10 +6,10 @@ from lilylcm import L06Depth
 
 #Setup
 lc = lcm.LCM()
-servoChannel = 17
-GPIO.setmode(GPIO.BOARD)
+servoChannel = 25
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(servoChannel,GPIO.OUT)
-pwm = GPIO.GPIO.PWM(servoChannel,60) #Serov only need 60 Hz
+pwm = GPIO.PWM(servoChannel,60) #Serov only need 60 Hz
 pwm.start(0) #Default Position
 
 
@@ -23,6 +23,7 @@ def depth_publish():
     ##TODO readIn
     msg = L06Depth()
     lc.publish("POD_Depth",L06Depth.encode(msg))
+    print L06Depth.encode(msg)
 
 
 subscription = lc.subscribe("POD_Anchor",servo_handler)
@@ -30,8 +31,9 @@ print 'Depth Module Started'
 
 while True:
     try:
-        lc.handle()
+        #lc.handle()
         depth_publish()
+	lc.handle()
     except KeyboardInterrupt:
         break
 
