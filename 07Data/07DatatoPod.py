@@ -37,6 +37,7 @@ def lcmHandler(channelNameLCM, data):
     channelNum = SLCMMap.index(channelNameLCM)
     #xbee.tx(dest_addr='\x00\x01', data='%s.%s' % (str(channelNum), data))
     xbee.tx(dest_addr_long='\x00\x13\xA2\x00\x40\xB9\x0B\x5F',dest_addr='\xFF\xFE',data='%s.%s' % (str(channelNum), data) )
+    print "LCM!"
 
 subscriptions = [lc.subscribe(name,lcmHandler) for name in SLCMMap]
 

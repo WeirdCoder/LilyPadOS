@@ -10,11 +10,10 @@ except ImportError:
 import struct
 
 class L14LEDs(object):
-    __slots__ = ["rgb", "brightness"]
+    __slots__ = ["switchOn"]
 
     def __init__(self):
-        self.rgb = [ 0 for dim0 in range(3) ]
-        self.brightness = 0
+        self.switchOn = False
 
     def encode(self):
         buf = BytesIO()
@@ -23,8 +22,7 @@ class L14LEDs(object):
         return buf.getvalue()
 
     def _encode_one(self, buf):
-        buf.write(struct.pack('>3b', *self.rgb[:3]))
-        buf.write(struct.pack(">b", self.brightness))
+        buf.write(struct.pack(">b", self.switchOn))
 
     def decode(data):
         if hasattr(data, 'read'):
@@ -38,15 +36,14 @@ class L14LEDs(object):
 
     def _decode_one(buf):
         self = L14LEDs()
-        self.rgb = struct.unpack('>3b', buf.read(3))
-        self.brightness = struct.unpack(">b", buf.read(1))[0]
+        self.switchOn = bool(struct.unpack('b', buf.read(1))[0])
         return self
     _decode_one = staticmethod(_decode_one)
 
     _hash = None
     def _get_hash_recursive(parents):
         if L14LEDs in parents: return 0
-        tmphash = (0x28b4e9dd6820ee05) & 0xffffffffffffffff
+        tmphash = (0xaebda0d2c51f94dc) & 0xffffffffffffffff
         tmphash  = (((tmphash<<1)&0xffffffffffffffff)  + (tmphash>>63)) & 0xffffffffffffffff
         return tmphash
     _get_hash_recursive = staticmethod(_get_hash_recursive)
