@@ -18,7 +18,7 @@ def my_handler(channel, data):
     datamsg = L14LEDs.decode(data)
     dic[0] = datamsg.switchOn
 
-  else if channel == "POD_Magnet":
+  elif channel == "POD_Magnet":
     datamsg = L19DockCommand.decode(data)
     dic[1] = datamasg.switchOn
 
@@ -27,7 +27,7 @@ def my_handler(channel, data):
   if port.readline() == "ON":
     msg.detected = True
     lc.publish("POD_DockDetect",  msg.encode())
-  else if port.readline() == "OFF":
+  elif port.readline() == "OFF":
     msg.detected = False
     lc.publish("POD_DockDetect", L21DockDetect.encode(msg))
   else:
