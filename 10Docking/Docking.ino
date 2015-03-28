@@ -15,16 +15,16 @@ void loop(){
   
   if (digitalRead(3) == HIGH){
     Serial.write("ON");
-    Serial.println("Healthy");
+    Serial.println("000"); //healthy
   }
   
   else if (digitalRead(3) == LOW){
     Serial.write("OFF");
-    Serial.println("Healthy");
+    Serial.println("000"); //healthy
   }
   
   else{
-    Serial.println("Something is wrong with the detection circuit");
+    Serial.println("003"); //Something is wrong with the detection circuit
   }
   
   if (Serial.available()){
@@ -33,29 +33,29 @@ void loop(){
     if (i == "00"){
       digitalWrite(2, LOW); 
       magnetServo.write(1);
-      Serial.println("Healthy");
+      Serial.println("000"); //healthy
     }
     
     else if (i == "01"){
       digitalWrite(2, LOW); 
       magnetServo.write(90);
-      Serial.println("Healthy");
+      Serial.println("000"); //healthy
     }
     
     else if (i == "10"){
       digitalWrite(2, HIGH); 
       magnetServo.write(1);
-      Serial.println("Healthy");
+      Serial.println("000"); //healthy
     }
     
     else if (i == "11"){
       digitalWrite(2, HIGH); 
       magnetServo.write(HIGH);
-      Serial.println("Healthy");
+      Serial.println("000"); //healthy
     }
   
     else{
-      Serial.println("Something is wrong with the RPi Communication");
+      Serial.println("002"); //Something is wrong with the RPi Communication
     }  
   }
   delay(50); 
