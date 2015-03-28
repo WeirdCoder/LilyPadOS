@@ -12,21 +12,27 @@ void setup(){
 }
 
 void loop(){
+  int val = None;
+  if (val == None || val != digitalRead(3)){
+    val = digitalRead(3); 
+    
+    if (val == HIGH){
+      Serial.write("ON");
+      Serial.println("000"); //healthy
+    }
   
-  if (digitalRead(3) == HIGH){
-    Serial.write("ON");
-    Serial.println("000"); //healthy
+    else if (val == LOW){
+      Serial.write("OFF");
+      Serial.println("000"); //healthy
+    }
+  
+    else{
+      Serial.println("003"); //Something is wrong with the detection circuit
+    }
   }
   
-  else if (digitalRead(3) == LOW){
-    Serial.write("OFF");
-    Serial.println("000"); //healthy
-  }
-  
-  else{
-    Serial.println("003"); //Something is wrong with the detection circuit
-  }
-  
+  else{}
+
   if (Serial.available()){
     int i = Serial.read();
     
