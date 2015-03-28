@@ -17,11 +17,13 @@ void loop(){
     if (i-48){
       digitalWrite(2, HIGH); 
       magnetServo.write(90);
+      Serial.write("ON");
     }
     
     else{
       digitalWrite(2, LOW);
       magnetServo.write(1);
+      Serial.write("OFF");
     }
   
   }
