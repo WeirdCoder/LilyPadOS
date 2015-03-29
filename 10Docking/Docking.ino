@@ -1,6 +1,7 @@
 #include <Servo.h>
 
 Servo magnetServo;
+int val = 2;
 
 void setup(){
   Serial.begin(9600);
@@ -12,17 +13,20 @@ void setup(){
 }
 
 void loop(){
-  int val = 789789;
-  if (val == 789789 || val != digitalRead(3)){
+  if (val == 2){
+    val = digitalRead(3);
+  }
+  
+  else if (val != digitalRead(3)){
     val = digitalRead(3); 
     
     if (val == HIGH){
-      Serial.write("ON");
+      Serial.println("ON");
       Serial.println("000"); //healthy
     }
   
     else if (val == LOW){
-      Serial.write("OFF");
+      Serial.println("OFF");
       Serial.println("000"); //healthy
     }
   
@@ -33,7 +37,7 @@ void loop(){
   
   else{}
 
-  /*if (Serial.available()){
+  if (Serial.available()){
     char i = Serial.read();
     
     if (i == '0'){
@@ -63,6 +67,6 @@ void loop(){
     else{
       Serial.println("002"); //Something is wrong with the RPi Communication
     }  
-  }*/
+  }
   delay(50); 
 }
