@@ -8,7 +8,7 @@ from ABE_ADCPi import ADCPi
 
 
 #Setup
-lc = lcm.LCM()
+lc = lcm.LCM('udpm://239.255.76.67:7667?ttl=1')
 servoChannel = 25
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -26,7 +26,7 @@ def servo_handler(channel, data): #Taking Servo Value
 
 #Read in Depth Sensor and publish depth to LCM
 def depth_publish():
-    depth = ADCPi(i2cBus)
+    depth = ADCPi(i2cBus, 0x6e, 0x69)
     msg = L06Depth()
     voltage = depth.read_voltage(0x69)-.5
     pressure = voltage*12.5 # Psi
@@ -40,11 +40,11 @@ print 'Depth Module Started'
 
 while True:
     try:
-        #lc.handle()
         #GPIO.output(servoChannel, GPIO.HIGH)
         #time.sleep(3)
         #GPIO.output(servoChannel, GPIO.LOW)
         depth_publish()
+        lc.handle()
     except KeyboardInterrupt:
         break
 

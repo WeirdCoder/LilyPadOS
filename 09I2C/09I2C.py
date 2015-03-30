@@ -10,7 +10,7 @@ import lcm
 from lilylcm import L07Humidity
 from lilylcm import L08Temperature 
 from lilylcm import L09Voltage
-lc = lcm.LCM()
+lc = lcm.LCM('udpm://239.255.76.67:7667?ttl=1')
 
 
 
@@ -37,12 +37,13 @@ There are also various read and write types like for just a single bit (Remember
 
 delay = 5
 while (True):
+    print 'running'
     '''  Humidity  '''
     humidityI2C.read()
     msg = L07Humidity()
     msg.humidity = float(humidityI2C.rh) 
-    # print msg.humidity
-    lc.publish("09I2C_HUMIDITY", msg.encode())
+    print msg.humidity
+    print lc.publish("09I2C_HUMIDITY", msg.encode())
 
     '''ADC'''
     msg = L09Voltage()
@@ -59,5 +60,5 @@ while (True):
     # print msg.temperature 
     lc.publish("09I2C_TEMP", msg.encode())
     
-    time.sleep(delay)
+    #time.sleep(delay)
     
