@@ -23,7 +23,6 @@ def depth_publish():
     ##TODO readIn
     msg = L06Depth()
     lc.publish("POD_Depth",L06Depth.encode(msg))
-    print L06Depth.encode(msg)
 
 
 subscription = lc.subscribe("POD_Anchor",servo_handler)
