@@ -19,7 +19,7 @@ failureMenu = menu.Menu('Message not Received.  Please test if you are broadcast
 '''LCM Channel Publish With Menu Return
 
 '''
-def lcmPublishtest(channelName, lcmType, msg):
+def lcmPublishTest(channelName, lcmType, msg):
     lc.publish(channelName,lcmType.encode(msg))
     messageSentMenu.open()
 
@@ -91,16 +91,16 @@ msg1 = L19DockCommand()
 msg1.switchOn = True
 msg2 = L19DockCommand()
 msg2.switchOn = False
-msg3 = L14LEDs()
+msg3 = L19DockCommand()
 msg3.switchOn = True
-msg4 = L14LEDs()
+msg4 = L19DockCommand()
 msg4.switchOn = False
 
 dockingMenu = menu.Menu('Docking Menu')
-options = [{"name":'Turn Magnet On',"function":lambda : lcmPublishTest('POD_DockMagnet',L19DockCommand,msg1)},
-        {"name":'Turn Magnet Off',"function":lambda : lcmPublishTest('POD_DockingMagnet',L19DockCommand,msg2 )},
-        {"name":'Turn LED On',"function":lambda : lcmPublishTest('POD_DockingLED',L14LEDs,msg3)},
-        {"name":'Turn LED Off',"function":lambda: lcmPublishTest('POD_DockingLED',L14LEDs,msg4)},
+options = [{"name":'Turn Magnet On',"function":lambda : lcmPublishTest('POD_Magnet',L19DockCommand,msg1)},
+        {"name":'Turn Magnet Off',"function":lambda : lcmPublishTest('POD_Magnet',L19DockCommand,msg2 )},
+        {"name":'Turn LED On',"function":lambda : lcmPublishTest('POD_LED',L19DockCommand,msg3)},
+        {"name":'Turn LED Off',"function":lambda: lcmPublishTest('POD_LED',L19DockCommand,msg4)},
         {"name":'Test Dock Detection Signal',"function":lambda : lcmListenTest('POD_DockDetect',L21DockDetect,5)},
         {"name":'return to Main Menu',"function":mainMenu.open}]
 dockingMenu.addOptions(options)
@@ -113,14 +113,14 @@ options = [{"name":'Start Charging',"function":1},
 chargerMenu.addOptions(options)
 
 #Anchoring Menu
-msg1 = L15Anchor()
-msg1.value = 127
-msg2 = L15Anchor()
-msg2.value = 0
+msg5 = L15Anchor()
+msg5.value = 127
+msg6 = L15Anchor()
+msg6.value = 0
 anchoringMenu = menu.Menu('Anchoring Menu')
 options = [{"name":'Test Depth Signal Receive',"function":lambda  : lcmListenTest('POD_Depth',L06Depth,5)},
-        {"name":'Test Clamp On',"function":lambda: lcmPublishTest('POD_Anchor',L15Anchor,msg1)},
-        {"name":'Test Clamp Off',"function":lambda: lcmPublishTest('POD_Anchor',L15Anchor,msg2)},
+        {"name":'Test Clamp On',"function":lambda: lcmPublishTest('POD_Anchor',L15Anchor,msg5)},
+        {"name":'Test Clamp Off',"function":lambda: lcmPublishTest('POD_Anchor',L15Anchor,msg6)},
         {"name":'return to Main Menu',"function":mainMenu.open}]
 anchoringMenu.addOptions(options)
 

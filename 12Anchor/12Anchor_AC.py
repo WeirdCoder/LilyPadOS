@@ -8,6 +8,7 @@ from ABE_ADCPi import ADCPi
 
 
 #Setup
+<<<<<<< HEAD
 lc = lcm.LCM('udpm://239.255.76.67:7667?ttl=1')
 servoChannel = 25
 GPIO.setmode(GPIO.BCM)
@@ -15,6 +16,12 @@ GPIO.setwarnings(False)
 GPIO.setup(servoChannel, GPIO.OUT) 
 #GPIO.setmode(GPIO.BOARD)
 #GPIO.setup(servoChannel,GPIO.OUT)
+=======
+lc = lcm.LCM()
+servoChannel = 25
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servoChannel,GPIO.OUT)
+>>>>>>> f2473d33f9fcd53952b730fa4f9206b2e655afef
 pwm = GPIO.PWM(servoChannel,60) #Serov only need 60 Hz
 pwm.start(0) #Default Position
 i2cBus = smbus.SMBus(1)
@@ -33,6 +40,7 @@ def depth_publish():
     msg.depth = (pressure*6895)/(9.8 * 1000) # depth in meters
     print msg.depth
     lc.publish("POD_Depth",L06Depth.encode(msg))
+    print L06Depth.encode(msg)
 
 
 subscription = lc.subscribe("POD_Anchor",servo_handler)
@@ -40,11 +48,17 @@ print 'Depth Module Started'
 
 while True:
     try:
+<<<<<<< HEAD
         #GPIO.output(servoChannel, GPIO.HIGH)
         #time.sleep(3)
         #GPIO.output(servoChannel, GPIO.LOW)
         depth_publish()
         lc.handle()
+=======
+        #lc.handle()
+        depth_publish()
+	lc.handle()
+>>>>>>> f2473d33f9fcd53952b730fa4f9206b2e655afef
     except KeyboardInterrupt:
         break
 
