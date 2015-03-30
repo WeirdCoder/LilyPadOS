@@ -16,7 +16,7 @@ def my_handler(channel, data):
 
 
 print "achoo!"
-lc.publish("05EBOLA",msg.encode())
+lc.publish("05_EBOLA",msg.encode())
 
 subscription = lc.subscribe("POD_05EBOLA",my_handler)
 try:

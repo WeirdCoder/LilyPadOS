@@ -13,6 +13,16 @@ port = serial.Serial("/dev/ttyACM0", baudrate = 9600) ##change to what ever port
 dic = [0,0]
 msg = L21DockDetect()
 
+def change():
+  if dic == [0,0]:
+    return 0
+  elif dic == [0,1]:
+    return 1
+  elif dic == [1,0]:
+    return 2
+  elif dic == [1,1]:
+    return 3 
+
 def my_handler(channel, data):
   if channel == "POD_LED":
     datamsg = L14LEDs.decode(data)
@@ -22,14 +32,14 @@ def my_handler(channel, data):
     datamsg = L19DockCommand.decode(data)
     dic[1] = datamasg.switchOn
 
-  port.write(str(int(dic[0])) + str(int(dic[1])))
+  port.write(change())
 
   if port.readline() == "ON":
     msg.detected = True
     lc.publish("POD_DockDetect",  msg.encode())
   elif port.readline() == "OFF":
     msg.detected = False
-    lc.publish("POD_DockDetect", L21DockDetect.encode(msg))
+    lc.publish("POD_DockDetect", msg.encode())
   else:
     print "Somethings fucked up in 10Docking.py"
 

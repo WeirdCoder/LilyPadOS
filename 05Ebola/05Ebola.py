@@ -13,7 +13,8 @@ def my_handler(channel, data):
 
 subscription = lc.subscribe("04DAN",my_handler)
 
-lc.publish("05EBOLA",msg.encode())
+while True:
+    lc.publish("05EBOLA",msg.encode())
 
 try:
     while True:
