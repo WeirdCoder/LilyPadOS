@@ -1,6 +1,0 @@
-package lilylcm;
-
-struct Antenna_Data
-{
-    # TO DO
-}
