@@ -1,28 +1,32 @@
 #include <Servo.h>
 
 Servo magnetServo;
+int val = 2;
 
 void setup(){
   Serial.begin(9600);
   pinMode(2, OUTPUT); //relays for LED
-  pinMode(3, INPUT) //dock detection circuit
+  pinMode(3, INPUT); //dock detection circuit
   magnetServo.attach(9);
   magnetServo.write(1);
   digitalWrite(2, LOW);
 }
 
 void loop(){
-  int val = None;
-  if (val == None || val != digitalRead(3)){
+  if (val == 2){
+    val = digitalRead(3);
+  }
+  
+  else if (val != digitalRead(3)){
     val = digitalRead(3); 
     
     if (val == HIGH){
-      Serial.write("ON");
+      Serial.println("ON");
       Serial.println("000"); //healthy
     }
   
     else if (val == LOW){
-      Serial.write("OFF");
+      Serial.println("OFF");
       Serial.println("000"); //healthy
     }
   
@@ -34,29 +38,29 @@ void loop(){
   else{}
 
   if (Serial.available()){
-    int i = Serial.read();
+    char i = Serial.read();
     
-    if (i == "00"){
+    if (i == '0'){
       digitalWrite(2, LOW); 
-      magnetServo.write(1);
+      magnetServo.write(20);
       Serial.println("000"); //healthy
     }
     
-    else if (i == "01"){
+    else if (i == '1'){
       digitalWrite(2, LOW); 
-      magnetServo.write(90);
+      magnetServo.write(30);
       Serial.println("000"); //healthy
     }
     
-    else if (i == "10"){
+    else if (i == '2'){
       digitalWrite(2, HIGH); 
-      magnetServo.write(1);
+      magnetServo.write(40);
       Serial.println("000"); //healthy
     }
     
-    else if (i == "11"){
+    else if (i == '3'){
       digitalWrite(2, HIGH); 
-      magnetServo.write(HIGH);
+      magnetServo.write(60);
       Serial.println("000"); //healthy
     }
   
