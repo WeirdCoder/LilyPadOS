@@ -13,12 +13,10 @@ def my_handler(channel, data):
    if msg.cured:
        print(":( I got Ebola from the Plane")
    
-
-
 print "achoo!"
 lc.publish("05EBOLA",msg.encode())
 
-subscription = lc.subscribe("PLANE_05EBOLA",my_handler)
+subscription = lc.subscribe("XBEE_05EBOLA",my_handler)
 try:
     while True:
         lc.handle()
