@@ -1,3 +1,5 @@
+# this code was last edited on March 13, 2015;
+# to be revised for proper channels and instances.
 
 import lcm
 import time
