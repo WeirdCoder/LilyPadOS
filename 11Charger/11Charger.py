@@ -64,30 +64,40 @@ GPIO.output(22, GPIO.LOW)
 
 #root.withdraw()
 #root.mainloop() # you must press escape to exit the key mode
-def  my_hndler(channel, data):
-    L16ChargerCommand.decode(data) #Input Msg from StateMachine
+def  my_handler(channel, data):
+    msg = L16ChargerCommand.decode(data) #Input Msg from StateMachine
  
+    if msg == "START":
+        GPIO.output(26, GPIO.HIGH)
+        time.sleep(2) # delays for 5 seconds
+        GPIO.output(26, GPIO.LOW)
+    elif msg == "STOP":
+        GPIO.output(26, GPIO.HIGH)
+        time.sleep(1) # delays for 5 seconds
+        GPIO.output(26, GPIO.LOW)
+    else: 
+        pass       
 
-subscription = lc.subscribe("16CHARGERCOMMAND", myhandler)
+subscription = lc.subscribe("16CHARGERCOMMAND", my_handler)
 
  
 
 try:
     while True:
-        lc.handle()
+#        lc.handle()
     except Keyboardinterrupt:
        pass
 
-if msg == "START":
-    GPIO.output(26, GPIO.HIGH)
-    time.sleep(2) # delays for 5 seconds
-    GPIO.output(26, GPIO.LOW)
-elif msg == "STOP":
-    GPIO.output(26, GPIO.HIGH)
-    time.sleep(1) # delays for 5 seconds
-    GPIO.output(26, GPIO.LOW)
-else: 
-    pass       
+#if msg == "START":
+#    GPIO.output(26, GPIO.HIGH)
+#    time.sleep(2) # delays for 5 seconds
+#    GPIO.output(26, GPIO.LOW)
+#elif msg == "STOP":
+#    GPIO.output(26, GPIO.HIGH)
+#    time.sleep(1) # delays for 5 seconds
+#    GPIO.output(26, GPIO.LOW)
+#else: 
+#    pass       
 '''buzzer Interrupt'''
 #buzzerPin = 1 #TODO define buzzer Pin
 #def buzzer_callback(gpio_id, value):
