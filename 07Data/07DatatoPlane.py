@@ -13,7 +13,7 @@ from xbee import ZigBee
 
 #Serial to LCM Mapping
 SLCMMap = ["05EBOLA","State","Heading", "GPS", "Wind"]
-PREFIX = "PLANE_"
+PREFIX = "XBEE_"
 #Setup Handler for LCM
 lc = lcm.LCM()
 channelDB = dict()
@@ -28,6 +28,7 @@ def serialHandler(serialData):
         (channelNum, data) = serialData.split('.')
         channelNum = int(channelNum)
         channelNameLCM = PREFIX+SLCMMap[channelNum]
+        print channelNameLCM
         lc.publish(channelNameLCM,data)
 
 xbee = ZigBee(ser, callback=serialHandler)
@@ -35,7 +36,7 @@ xbee = ZigBee(ser, callback=serialHandler)
 def lcmHandler(channelNameLCM, data):
     #Handler converting LCM to Serial
     channelNum = SLCMMap.index(channelNameLCM)
-    xbee.tx(dest_addr_long='\x00\x13\xA2\x00\x40\xB9\x0B\x5D',dest_addr='\xFF\xFE',data='%s.%s' % (str(channelNum), data) )
+    xbee.tx(dest_addr_long='\x00\x13\xA2\x00\x40\xDC\x44\x90',dest_addr='\xFF\xFE',data='%s.%s' % (str(channelNum), data) )
     print "LCM! on Pod"
 
 subscriptions = [lc.subscribe(name,lcmHandler) for name in SLCMMap]

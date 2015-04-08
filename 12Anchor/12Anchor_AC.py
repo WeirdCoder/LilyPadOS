@@ -5,10 +5,16 @@ import RPi.GPIO as GPIO
 from lilylcm import L15Anchor
 from lilylcm import L06Depth
 from ABE_ADCPi import ADCPi
+<<<<<<< HEAD
 import time
 
 #Setup
 
+=======
+import threading
+
+#Setup
+>>>>>>> 8556e6e4b2a88e2fc2d5a83bbaeab59c7d4b91c1
 lc = lcm.LCM('udpm://239.255.76.67:7667?ttl=1')
 servoChannel = 25
 GPIO.setmode(GPIO.BCM)
@@ -24,6 +30,11 @@ i2cBus = smbus.SMBus(1)
 def servo_handler(channel, data): #Taking Servo Value 
     msg = L15Anchor.decode(data)
     pwm.ChangeDutyCycle(msg.value)
+
+servoThreadState = {"active":True}
+def servo_Thread():
+    while servoThreadState["active"]:
+        lc.handle()
 
 #Read in Depth Sensor and publish depth to LCM
 def depth_publish():
@@ -43,6 +54,7 @@ def depth_publish():
 subscription = lc.subscribe("POD_Anchor",servo_handler)
 print 'Depth Module Started'
 
+<<<<<<< HEAD
 while True:
     try:
         #GPIO.output(servoChannel, GPIO.HIGH)
@@ -52,9 +64,21 @@ while True:
         #lc.handle()
     except KeyboardInterrupt:
         break
+=======
+servoThread = threading.Thread(target=servo_Thread)
+servoThread.setDaemon(True)
+servoThread.start()
+>>>>>>> 8556e6e4b2a88e2fc2d5a83bbaeab59c7d4b91c1
 
-
-#Tear Down
-print 'Depth Module Exited.'
-lc.unsubscribe(subscription)
-GPIO.cleanup()
+try:
+    while True:
+        depth_publish()
+        time.sleep(0.4)
+except KeyboardInterrupt:
+    x = 1
+finally:
+    #Tear Down
+    servoThreadState['active'] = False
+    lc.unsubscribe(subscription)
+    GPIO.cleanup()
+    print 'Depth Module Exited.'
