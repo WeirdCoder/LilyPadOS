@@ -1,9 +1,3 @@
-//-------------------------------------MAGNETOMETER---------------------------//
-//-------------------------------------MAGNETOMETER---------------------------//
-//-------------------------------------MAGNETOMETER---------------------------//
-//-------------------------------------MAGNETOMETER---------------------------//
-//-------------------------------------MAGNETOMETER---------------------------//
-//-------------------------------------MAGNETOMETER---------------------------//
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
@@ -15,10 +9,12 @@ void getMagStats(void) {
   //new sensor event
   sensors_event_t event;
   mag.getEvent(&event);
+  
   // Display the output from the magnetometer
   Serial.print("X: "); Serial.print(event.magnetic.x); Serial.print("  ");
   Serial.print("Y: "); Serial.print(event.magnetic.y); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(event.magnetic.z); Serial.print("  ");Serial.println("uT");
+  Serial.print("Z: "); Serial.print(event.magnetic.z); Serial.print("  "); Serial.println("uT");
+  
   float heading = atan2(event.magnetic.y, event.magnetic.x);
   float declinationAngle = 0.22;
   heading += declinationAngle;
@@ -34,6 +30,8 @@ void getMagStats(void) {
   
   Serial.print("Heading (degrees): "); Serial.println(headingDegrees);
 }
+
+
 
 //------------------------------------GPS------------------------------------------//
 //------------------------------------GPS------------------------------------------//
@@ -57,7 +55,7 @@ void getGPSstats() {
     while (ss.available())
     {
       char c = ss.read();
-      // Serial.write(c); // uncomment this line if you want to see the GPS data flowing
+      Serial.write(c); // uncomment this line if you want to see the GPS data flowing
       if (gps.encode(c)) // Did a new valid sentence come in?
         newData = true;
     }
@@ -77,12 +75,12 @@ void getGPSstats() {
   }
   
   gps.stats(&chars, &sentences, &failed);
-  Serial.print(" CHARS=");
-  Serial.print(chars);
-  Serial.print(" SENTENCES=");
-  Serial.print(sentences);
-  Serial.print(" CSUM ERR=");
-  Serial.println(failed);
+//  Serial.print(" CHARS=");
+//  Serial.print(chars);
+//  Serial.print(" SENTENCES=");
+//  Serial.print(sentences);
+//  Serial.print(" CSUM ERR=");
+//  Serial.println(failed);
   if (chars == 0)
     Serial.println("** No characters received from GPS: check wiring **");
   }
@@ -96,8 +94,8 @@ void getGPSstats() {
 //------------------------------------WIND 1---------------------------------//
 //------------------------------------WIND 1---------------------------------//
 
-#define analogPinForRV    1 
-#define analogPinForTMP   0
+#define analogPinForRV    1 //green
+#define analogPinForTMP   0 //white
 
 const float zeroWindAdjustment =  .2; // negative numbers yield smaller wind speeds and vice versa.
 
@@ -110,7 +108,7 @@ float zeroWind_ADunits;
 float zeroWind_volts;
 float WindSpeed_MPH;
 
-void getWindData_1(){
+float getWindData_1(){
 if (millis() - lastMillis > 200){      // read every 200 ms - printing slows this down further
     
     TMP_Therm_ADunits = analogRead(analogPinForTMP);
@@ -132,23 +130,9 @@ if (millis() - lastMillis > 200){      // read every 200 ms - printing slows thi
     
    WindSpeed_MPH =  pow(((RV_Wind_Volts - zeroWind_volts) /.2300) , 2.7265);   
    
-    Serial.print("  TMP volts ");
-    Serial.print(TMP_Therm_ADunits * 0.0048828125);
-    
-    Serial.print(" RV volts ");
-    Serial.print((float)RV_Wind_Volts);
-
-    Serial.print("\t  TempC*100 ");
-    Serial.print(TempCtimes100 );
-
-    Serial.print("   ZeroWind volts ");
-    Serial.print(zeroWind_volts);
-
-    Serial.print("   WindSpeed MPH ");
-    Serial.println((float)WindSpeed_MPH);
     lastMillis = millis();    
   } 
-  
+  return WindSpeed_MPH;
 }
 
 
@@ -160,8 +144,8 @@ if (millis() - lastMillis > 200){      // read every 200 ms - printing slows thi
 //------------------------------------WIND 2---------------------------------//
 //------------------------------------WIND 2---------------------------------//
 
-#define analogPinForRV_0    3 
-#define analogPinForTMP_0   2
+#define analogPinForRV_0    3 //green
+#define analogPinForTMP_0   2 //white
 
 const float zeroWindAdjustment_0 =  .2; // negative numbers yield smaller wind speeds and vice versa.
 
@@ -174,13 +158,11 @@ float zeroWind_ADunits_0;
 float zeroWind_volts_0;
 float WindSpeed_MPH_0;
 
-void getWindData_2() {
+float getWindData_2() {
 if (millis() - lastMillis > 200){      // read every 200 ms - printing slows this down further
     
     TMP_Therm_ADunits_0 = analogRead(analogPinForTMP_0);
     RV_Wind_ADunits_0 = analogRead(analogPinForRV_0);
-//    Serial.println(TMP_Therm_ADunits_0);
-//    Serial.println(RV_Wind_ADunits_0);
     RV_Wind_Volts_0 = (RV_Wind_ADunits_0 *  0.0048828125);
 
     // these are all derived from regressions from raw data as such they depend on a lot of experimental factors
@@ -197,24 +179,37 @@ if (millis() - lastMillis > 200){      // read every 200 ms - printing slows thi
     // The constants b and c were determined by some Excel wrangling with the solver.
     
    WindSpeed_MPH_0 =  pow(((RV_Wind_Volts_0 - zeroWind_volts_0) /.2300) , 2.7265);   
-   
-    Serial.print("  TMP volts 2: ");
-    Serial.print(TMP_Therm_ADunits_0 * 0.0048828125);
-    
-    Serial.print(" RV volts 2: ");
-    Serial.print((float)RV_Wind_Volts_0);
-
-    Serial.print("\t  TempC*100 2: ");
-    Serial.print(TempCtimes100_0 );
-
-    Serial.print("   ZeroWind volts 2: ");
-    Serial.print(zeroWind_volts_0);
-
-    Serial.print("   WindSpeed MPH 2: ");
-    Serial.println((float)WindSpeed_MPH_0);
     lastMillis = millis();    
-  } 
+  }
+ return WindSpeed_MPH_0;
 }
+
+//-----------------------------------WIND ANALYSIS---------------------------------//
+//-----------------------------------WIND ANALYSIS---------------------------------//
+//-----------------------------------WIND ANALYSIS---------------------------------//
+//-----------------------------------WIND ANALYSIS---------------------------------//
+//-----------------------------------WIND ANALYSIS---------------------------------//
+//-----------------------------------WIND ANALYSIS---------------------------------//
+
+float get_speed() {
+  float wind_speed;
+  float wind_1 = getWindData_1();
+  float wind_2 = getWindData_2();
+  
+  wind_speed = sqrt(wind_1*wind_1 + wind_2*wind_2);
+  return wind_speed;
+}
+
+float get_direction() {
+  double wind_dir;
+  float wind_1 = getWindData_1();
+  float wind_2 = getWindData_2();
+  
+  wind_dir = atan2(wind_1, wind_2);
+  return wind_dir;
+}
+
+
 //------------------------------------SETUP----------------------------------------//
 //------------------------------------SETUP----------------------------------------//
 //------------------------------------SETUP----------------------------------------//
@@ -224,6 +219,7 @@ if (millis() - lastMillis > 200){      // read every 200 ms - printing slows thi
 //------------------------------------SETUP----------------------------------------//
 void setup() {
   Serial.begin(9600);
+  ss.begin(9600);
   
   if(!mag.begin())
   {
@@ -231,24 +227,8 @@ void setup() {
     Serial.println("Ooops, no HMC5883 detected ... Check your wiring!");
     while(1);
   }
-  Serial.println("The magnetometer has been connected successfully!");
-  delay(1000);
-  
-  ss.begin(4800);
+
   Serial.println("The GPS has been successfully connected, though no fix guaranteed");
-  delay(1000);
-  
-  //below is not required
-  //pinMode(A2, INPUT);
-  //pinMode(A3, INPUT);
-  //digitalWrite(A3, LOW);
-  Serial.println("First wind sensor successfully connected");
-  delay(1000);
-  Serial.println("Second wind sensor successfully connected");
-  delay(1000);
-  
-  
-  
 }
 
 //------------------------------------LOOP-----------------------------------------//
@@ -259,12 +239,21 @@ void setup() {
 //------------------------------------LOOP-----------------------------------------//
 //------------------------------------LOOP-----------------------------------------//
 void loop() {
-  getMagStats(); // get the stats for the magnetometer
-  delay(500);
-  //getGPSstats();
-  //delay(10);
-  //getWindData_1();
-  //delay(10);
-  //getWindData_2();
-  //delay(1000);
+  
+  Serial.print("Wind Speed: ");
+  Serial.print((float) get_speed());
+  delay(10);
+  Serial.print("    Wind Direction: ");
+  Serial.print((float) get_direction());
+  delay(10);
+  Serial.print("    Wind Speed 1: ");
+  Serial.print((float) getWindData_1());
+  delay(10);
+  Serial.print("    Wind Speed 2: ");
+  Serial.println((float) getWindData_2());
+  delay(10);
+  getGPSstats();
+  delay(10);
+  getMagStats();
+  delay(10);
 }
