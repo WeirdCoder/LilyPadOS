@@ -9,8 +9,8 @@ msg = L04Dan()
 msg.name = "Dark n Chunky"
 
 def my_handler(channel, data):
-  print("Received message from %s" % channel)
   lc.publish("04DAN", msg.encode())
+  return "Received message from %s" % channel
   
 subscription = lc.subscribe("05EBOLA", my_handler)
   
