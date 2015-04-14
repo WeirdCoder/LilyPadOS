@@ -1,47 +1,38 @@
-import serial
+import RPi.GPIO as GPIO
 import lcm
 import time
 
 from lilylcm import L21DockDetect
-from lilylcm import L14LEDs
+from lilylcm import L14LEDs ##now the satellite box
 from lilylcm import L19DockCommand 
 
 lc = lcm.LCM()
 
-port = serial.Serial("/dev/ttyACM0", baudrate = 9600) ##change to what ever port the arduino is connected to
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(36, GPIO.IN) ##charge detection
+GPIO.setup(38, GPIO.OUT) ##magnet servo
+GPIO.setup(40, GPIO.OUT) ##relay for satellite box
 
-dic = [0,0]
-msg = L21DockDetect()
+pwm = GPIO.PWM(38, 100) ##set frequency to 100Hz
+pwm.start(1) ##start with a duty cycle of 1 so the magnet is in the off position
+GPIO.output(40, False) ##turn the satellite box off
 
-def change():
-  if dic == [0,0]:
-    return 0
-  elif dic == [0,1]:
-    return 1
-  elif dic == [1,0]:
-    return 2
-  elif dic == [1,1]:
-    return 3 
+msg = L21DockDetect() ##get a message ready to send to the dock detect channel
 
 def my_handler(channel, data):
   if channel == "POD_LED":
     datamsg = L14LEDs.decode(data)
-    dic[0] = datamsg.switchOn
+    GPIO.output(40, datamsg.switchOn)
 
   elif channel == "POD_Magnet":
     datamsg = L19DockCommand.decode(data)
-    dic[1] = datamasg.switchOn
+    if datamsg.switchOn == True:
+      pwm.ChangeDutyCycle(99)
+    else:
+      pwm.ChangeDutyCycle(1)
 
-  port.write(change())
-
-  if port.readline() == "ON":
-    msg.detected = True
-    lc.publish("POD_DockDetect",  msg.encode())
-  elif port.readline() == "OFF":
-    msg.detected = False
-    lc.publish("POD_DockDetect", msg.encode())
-  else:
-    print "Somethings fucked up in 10Docking.py"
+  msg.detected = boolean(GPIO.input(36))
+  lc.publish("POD_DockDetect",  msg.encode())
 
 subL = lc.subscribe("POD_LED", my_handler)
 subD = lc.subscribe("POD_Magnet", my_handler)
