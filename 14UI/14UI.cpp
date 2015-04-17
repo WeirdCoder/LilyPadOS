@@ -15,7 +15,7 @@ class Handler
 
         void handleMessage(const lcm::ReceiveBuffer* rbuf,
                 const std::string& chan, 
-                const exlcm::example_t* msg)
+                const lilylcm* msg)
         {
             int i;
             printf("Received message on channel \"%s\":\n", chan.c_str());
