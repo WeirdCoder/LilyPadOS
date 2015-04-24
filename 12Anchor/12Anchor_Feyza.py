@@ -4,19 +4,21 @@ from lilylcm import L15Anchor
 from lilylcm import L06Depth
 
 lc=lcm.LCM()
-idleDepth=5.5
+idleDepth=0.6
 
 
+closeAngleDuty=33
+openeAngleDuty=50
 def depthControl_handler(channel,data):
 	msg=L06Depth.decode(data)
 	currentDepth=msg.depth
 	msg2=L15Anchor()
-	msg2.value=0
+	msg2.value=initialValue
 
-	if currentDepth<=idleDepth-5.0 :# Close, too shallow
-		msg2.value=0
+	if currentDepth<=(idleDepth-0.3) :# Close, too shallow
+		msg2.value=closeAngleDuty
 	else: # Open when it hits the target
-		msg2.value=2.77
+		msg2.value=openAngleDuty
         print msg2.value
 	lc.publish("POD_Anchor", msg2.encode())
 	time.sleep(0.05)
