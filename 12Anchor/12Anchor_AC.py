@@ -31,7 +31,7 @@ def servo_Thread():
 
 #Read in Depth Sensor and publish depth to LCM
 def depth_publish():
-    depth = ADCPi(i2cBus, 0x6e, 0x69)
+    depth = ADCPi(i2cBus, 0x68, 0x69)
     msg = L06Depth()
     voltage = depth.read_voltage(0x69)-.5
     pressure = voltage*12.5 # Psi
