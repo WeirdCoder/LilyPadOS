@@ -73,7 +73,7 @@ def  my_handler(channel, data):
         GPIO.output(26, GPIO.LOW)
     elif msg == "STOP":
         GPIO.output(26, GPIO.HIGH)
-        time.sleep(1) # delays for 5 seconds
+        time.sleep(0.5) # delays for 5 seconds
         GPIO.output(26, GPIO.LOW)
     else: 
         pass       
@@ -82,11 +82,11 @@ subscription = lc.subscribe("16CHARGERCOMMAND", my_handler)
 
  
 
-try:
-    while True:
+#try:
+#   while True:
 #        lc.handle()
-    except Keyboardinterrupt:
-       pass
+#   except Keyboardinterrupt:
+#       pass
 
 #if msg == "START":
 #    GPIO.output(26, GPIO.HIGH)
@@ -119,19 +119,23 @@ while button != "Stop":
     button = input("Press a button: ")
     if button == "E":
         GPIO.output(26, GPIO.HIGH)
-	time.sleep(1) # delays for 5 seconds
+	time.sleep(0.5) # delays for 5 seconds
         GPIO.output(26, GPIO.LOW)
+    if button == "C":
+        GPIO.output(26, GPIO.HIGH)
+        time.sleep(2)
+        GPIO.output(26, GPIO.HIGH)
     if button == "D":
         GPIO.output(17, GPIO.HIGH)
-	time.sleep(1) # delays for 5 seconds
+	time.sleep(0.5) # delays for 5 seconds
         GPIO.output(17, GPIO.LOW)
     if button == "I":
         GPIO.output(27, GPIO.HIGH)
-	time.sleep(1) # delays for 5 seconds
+	time.sleep(0.5) # delays for 5 seconds
         GPIO.output(27, GPIO.LOW)
     if button == "B": 
         GPIO.output(22, GPIO.HIGH)
-	time.sleep(1) # delays for 5 seconds
+	time.sleep(0.5) # delays for 5 seconds
 	GPIO.output(22, GPIO.LOW)
 
 GPIO.output(26, GPIO.LOW)
