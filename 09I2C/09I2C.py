@@ -35,7 +35,7 @@ yourI2C.readList(register,numberOfBytes)
 There are also various read and write types like for just a single bit (Remember that a byte consist of 8 bits.)  And also always search for 3rd party codes.  If you can get 3rd party code that does the i2C readout for you, do it!
 '''
 
-delay = 5
+delay = 0.5
 while (True):
     #print 'running'
     '''  Humidity  '''
