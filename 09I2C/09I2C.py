@@ -37,12 +37,12 @@ There are also various read and write types like for just a single bit (Remember
 
 delay = 5
 while (True):
-    print 'running'
+    #print 'running'
     '''  Humidity  '''
     humidityI2C.read()
     msg = L07Humidity()
     msg.humidity = float(humidityI2C.rh) 
-    print msg.humidity
+    print str(msg.humidity) + "Humidity"
     lc.publish("09I2C_HUMIDITY", msg.encode())
 
     '''ADC'''
@@ -57,7 +57,7 @@ while (True):
     tempI2C.read()
     msg = L08Temperature()
     msg.temperature = float(tempI2C.t)
-    print msg.temperature 
+    print str(msg.temperature) + "C"
     lc.publish("09I2C_TEMP", msg.encode())
     
     time.sleep(delay)
