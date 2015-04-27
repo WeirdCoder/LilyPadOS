@@ -16,13 +16,13 @@ lc = lcm.LCM('udpm://239.255.76.67:7667?ttl=1')
 
 #Address of devices
 
-adcAddress = 0x48
+#adcAddress = 0x48
 tempAddress = 0x27
 humidityAdress = 0x27
 
 #Initiate I2C instances
 humidityI2C = HIH6130()
-adcI2C   = ADS1x15(adcAddress)
+#adcI2C   = ADS1x15(adcAddress)
 tempI2C  = HIH6130()
 
 '''How to Use i2c 
@@ -46,12 +46,12 @@ while (True):
     lc.publish("09I2C_HUMIDITY", msg.encode())
 
     '''ADC'''
-    msg = L09Voltage()
-    pga = 6144
-    spa = 8
-    msg.analogValue = [adcI2C.readADCDifferential01(pga, spa), 1.1, 2.2, 3.3, 1.1, 2.2, 3.3, 4.4]
-    print msg.analogValue
-    lc.publish("09I2C_ADC", msg.encode())
+    #msg = L09Voltage()
+    #pga = 6144
+    #spa = 8
+    #msg.analogValue = [adcI2C.readADCDifferential01(pga, spa), 1.1, 2.2, 3.3, 1.1, 2.2, 3.3, 4.4]
+    #print msg.analogValue
+    #lc.publish("09I2C_ADC", msg.encode())
 
     '''Temp'''
     tempI2C.read()
