@@ -43,22 +43,22 @@ while (True):
     msg = L07Humidity()
     msg.humidity = float(humidityI2C.rh) 
     print msg.humidity
-    print lc.publish("09I2C_HUMIDITY", msg.encode())
+    lc.publish("09I2C_HUMIDITY", msg.encode())
 
     '''ADC'''
     msg = L09Voltage()
     pga = 6144
     spa = 8
     msg.analogValue = [adcI2C.readADCDifferential01(pga, spa), 1.1, 2.2, 3.3, 1.1, 2.2, 3.3, 4.4]
-    # print msg.analogValue
+    print msg.analogValue
     lc.publish("09I2C_ADC", msg.encode())
 
     '''Temp'''
     tempI2C.read()
     msg = L08Temperature()
     msg.temperature = float(tempI2C.t)
-    # print msg.temperature 
+    print msg.temperature 
     lc.publish("09I2C_TEMP", msg.encode())
     
-    #time.sleep(delay)
+    time.sleep(delay)
     
