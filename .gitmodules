@@ -1,0 +1,9 @@
+[submodule "AdaFruit"]
+    path = 09I2C/Adafruit-Raspberry-Pi-Python-Code
+    url = https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code.git
+[submodule "hih6130"]
+    path = 09I2C/python-hih6130
+    url = https://github.com/dhhagan/python-hih6130.git
+[submodule "ABE"]
+    path = 12Anchor/ABElectronics_Python_Libraries
+    url = https://github.com/abelectronicsuk/ABElectronics_Python_Libraries.git
