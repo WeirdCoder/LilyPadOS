@@ -4,17 +4,17 @@ from lilylcm import L15Anchor
 from lilylcm import L06Depth
 
 lc=lcm.LCM()
-idleDepth=9.0
+idleDepth=0.0
 previousDepth=0.0
 velocity=0
-def depthControl_handler(channel,data)
+def depthControl_handler(channel,data):
 	msg=L06Depth.decode(data)
 	currentDepth=msg.depth
 	msg2=L15Anchor()
 	msg2.value=0
 	if currentDepth<=idleDepth-5.0 :# Close, too shallow
 		msg2.value=0
-	else # Open when it hits the target
+	else: # Open when it hits the target
 		msg2.value=2.77
 	velocity=(currentDepth-previousDepth)/0.05
 	previousDepth=currentDepth
