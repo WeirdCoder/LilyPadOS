@@ -11,13 +11,30 @@ from lilylcm import L16ChargerCommand
 from lilylcm import L19DockCommand
 
 lc = lcm.LCM()
+
 HOST = ' '#input IP Address
 PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 dic = {'Hum': 0, 'Temp': 0, 'Dep': 0, 'Sat': 0, 'Charge': 0, 'Mag': 0}
+
 def my_handler(channel, data):
-  if channel == 
+  if channel == "POD_Depth":
+    dic['Dep'] = data.depth
+  elif channel == "POD_Humidity":
+    dic['Hum'] = data.humidity
+  elif channel == "POD_Tempurature":
+    dic['Temp'] = data.tempurature
+  elif channel == "POD_LED":
+    dic['Sat'] = data.switchOn
+  elif channel == "POD_Charge":
+    dic['Charge'] = data.targetState
+  elif channel == "POD_Magnet":
+    dic['Mag'] = data.switchOn
+  else:
+    pass
+  
+  s.send(json.dumps(dic))
 
 subDep = lc.subscribe("POD_Depth", my_handler)
 subHum = lc.subscribe("POD_Humidity", my_handler)
@@ -32,4 +49,5 @@ try:
     time.sleep(0.05)
 except KeyboardInterrupt:
   lc.unsubscribe(sub)
+  s.close()
 
