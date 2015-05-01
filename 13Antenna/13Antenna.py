@@ -9,22 +9,23 @@ from lilylcm import pod_data_t
 # all LCM calls are commented out for time being. Consult AC
 lc = lcm.LCM()
 
-arduinoComm = Serial('/dev/ttyACM1',9600)#Serial
-
+arduinoComm = Serial('/dev/ttyACM0',9600)#Serial
+print arduinoComm
+print 'connected'
 # help on this one... 
 
 try:
     while True:
-        #Read data from Arduino
         separator = ','
-        readin = arduinoComm.readline()
-	
+        readin = str(arduinoComm.readline())
+	readin = readin.split(separator)
 	# in case of faulty data, where fewer than five elements are given
 	if len(readin) >= 5:
-		data = [float(item) for item in readin.split(separator)[0:5]]
+		data = [float(item) for item in readin[0:5]]
 		(compassHeading,windMag,windDir,gpsLat,gpsLong) = data
 	
 		# comment these out for testing, this is for debugging
+		
 		#print 'compass:', compassHeading
 		#print 'wind mag:', windMag
 		#print 'wind dir:', windDir
@@ -39,7 +40,7 @@ try:
 		newMsg.timestamp = 0.0
 		newMsg.pod_wave_off = 1 # is this 'True' or just 1 / 0
 	
-	lc.publish('POD_ANTENNA',newMsg.encode())
+		lc.publish('POD_ANTENNA',newMsg.encode())
 
         time.sleep(.1)
 

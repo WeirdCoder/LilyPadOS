@@ -23,3 +23,4 @@ from .L21DockDetect import L21DockDetect
 from .L10ChargerComplete import L10ChargerComplete
 from .L19DockCommand import L19DockCommand
 from .pod_data_t import pod_data_t
+from .L02Banana import L02Banana
