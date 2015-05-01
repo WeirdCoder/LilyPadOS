@@ -14,7 +14,7 @@ msg6 = L06Depth()
 msg7 = L07Humidity()
 msg8 = L08Temperature()
 msg14 = L14LEDs()
-msg16 = L16ChargerCommad()
+msg16 = L16ChargerCommand()
 msg19 = L19DockCommand()
 
 while True:
