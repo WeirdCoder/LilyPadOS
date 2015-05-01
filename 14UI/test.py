@@ -3,7 +3,7 @@ import lcm
 
 from lilylcm import L06Depth
 from lilylcm import L07Humidity
-from lilylcm import L08Tempurature
+from lilylcm import L08Temperature
 from lilylcm import L14LEDs
 from lilylcm import L16ChargerCommand
 from lilylcm import L19DockCommand
@@ -12,7 +12,7 @@ lc = lcm.LCM()
 
 msg6 = L06Depth()
 msg7 = L07Humidity()
-msg8 = L08Tempurature()
+msg8 = L08Temperature()
 msg14 = L14LEDs()
 msg16 = L16ChargerCommad()
 msg19 = L19DockCommand()
@@ -23,7 +23,7 @@ while True:
   
   msg6.depth = randint(0, 100)
   msg7.humidity = randint(0, 100)
-  msg8.tempurature = randint(0, 500)
+  msg8.temperature = randint(0, 500)
   
   if i == 1:
     msg14.switchOn = True
