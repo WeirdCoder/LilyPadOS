@@ -22,3 +22,4 @@ from .L17XbeeWrite import L17XbeeWrite
 from .L21DockDetect import L21DockDetect
 from .L10ChargerComplete import L10ChargerComplete
 from .L19DockCommand import L19DockCommand
+from .pod_data_t import pod_data_t

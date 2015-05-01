@@ -20,17 +20,23 @@ dic = {'Hum': 0, 'Temp': 0, 'Dep': 0, 'Sat': 0, 'Charge': 0, 'Mag': 0}
 
 def my_handler(channel, data):
   if channel == "POD_Depth":
-    dic['Dep'] = data.depth
-  elif channel == "POD_Humidity":
-    dic['Hum'] = data.humidity
-  elif channel == "POD_Tempurature":
-    dic['Temp'] = data.tempurature
+    datamsg = L06Depth.decode(data)
+    dic['Dep'] = datamsg.depth
+  elif channel == "09I2C_HUMIDITY":
+    datamsg = L07Humidity.decode(data)
+    dic['Hum'] = datamsg.humidity
+  elif channel == "09I2C_TEMP":
+    datamsg = L08Tempurature.decode(data)
+    dic['Temp'] = datamsg.tempurature
   elif channel == "POD_LED":
-    dic['Sat'] = data.switchOn
+    datamsg = L14LEDs.decode(data)
+    dic['Sat'] = datamsg.switchOn
   elif channel == "POD_Charge":
-    dic['Charge'] = data.targetState
+    datamsg = L16ChargerCommad.decode(data)
+    dic['Charge'] = datamsg.targetState
   elif channel == "POD_Magnet":
-    dic['Mag'] = data.switchOn
+    datamsg = L19DockCommand.decode(data)
+    dic['Mag'] = datamsg.switchOn
   else:
     pass
   
