@@ -12,7 +12,9 @@ from lilylcm import L19DockCommand
 
 lc = lcm.LCM()
 
-HOST = ' '#input IP Address
+IP = input("What is the servers IP address? ")
+
+HOST = IP
 PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
