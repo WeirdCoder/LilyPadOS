@@ -5,7 +5,7 @@ import json
 
 from lilylcm import L06Depth
 from lilylcm import L07Humidity
-from lilylcm import L08Tempurature
+from lilylcm import L08Temperature
 from lilylcm import L14LEDs
 from lilylcm import L16ChargerCommand
 from lilylcm import L19DockCommand
@@ -28,8 +28,8 @@ def my_handler(channel, data):
     datamsg = L07Humidity.decode(data)
     dic['Hum'] = datamsg.humidity
   elif channel == "09I2C_TEMP":
-    datamsg = L08Tempurature.decode(data)
-    dic['Temp'] = datamsg.tempurature
+    datamsg = L08Temperature.decode(data)
+    dic['Temp'] = datamsg.temperature
   elif channel == "POD_LED":
     datamsg = L14LEDs.decode(data)
     dic['Sat'] = datamsg.switchOn
