@@ -12,9 +12,9 @@ from lilylcm import L19DockCommand
 
 lc = lcm.LCM()
 
-IP = input("What is the servers IP address? ")
+#IP = input("What is the servers IP address? ")
 
-HOST = IP
+HOST = '18.111.46.178'
 PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
@@ -34,7 +34,7 @@ def my_handler(channel, data):
     datamsg = L14LEDs.decode(data)
     dic['Sat'] = datamsg.switchOn
   elif channel == "POD_Charge":
-    datamsg = L16ChargerCommad.decode(data)
+    datamsg = L16ChargerCommand.decode(data)
     dic['Charge'] = datamsg.targetState
   elif channel == "POD_Magnet":
     datamsg = L19DockCommand.decode(data)
@@ -56,6 +56,5 @@ try:
     lc.handle()
     time.sleep(0.05)
 except KeyboardInterrupt:
-  lc.unsubscribe(sub)
   s.close()
 
