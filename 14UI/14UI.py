@@ -43,8 +43,8 @@ def my_handler(channel, data):
   s.send(json.dumps(dic))
 
 subDep = lc.subscribe("POD_Depth", my_handler)
-subHum = lc.subscribe("POD_Humidity", my_handler)
-subTemp = lc.subscribe("POD_Tempurature", my_handler)
+subHum = lc.subscribe("09I2C_HUMIDITY", my_handler)
+subTemp = lc.subscribe("09I2C_TEMP", my_handler)
 subSat = lc.subscribe("POD_LED", my_handler) 
 subChar = lc.subscribe("POD_Charge", my_handler)
 subMag = lc.subscribe("POD_Magnet", my_handler)
