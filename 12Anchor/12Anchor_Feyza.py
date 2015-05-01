@@ -23,9 +23,9 @@ def depthControl_handler(channel,data):
 	#msg2.value=openAngleDuty
         print currentTime()
 	#GPIO.output(pinNumber,close)
-	#time.sleep(30)
+	time.sleep(0.2)
 
-	if currentTime()<2*60:
+	if currentTime()<4*60:
                 print 'Stage1'
 		if currentDepth<=idleDepth :# Close, too shallow
 			#msg2.value=closeAngleDuty
@@ -34,9 +34,9 @@ def depthControl_handler(channel,data):
 		#	msg2.value=openAngleDuty
 			GPIO.output(pinNumber,GPIO.HIGH)
       	else:
-		if(currentTime()>3*60):
+		if(currentTime()>6*60):
 			print 'StageSOS'	
-			if int(currentTime())%11==1:
+			if int(currentTime())%10 <5 :
 				#msg2.value=openAngleDuty
 				GPIO.output(pinNumber, GPIO.HIGH)
 			else:
@@ -46,10 +46,10 @@ def depthControl_handler(channel,data):
 
 			GPIO.output(pinNumber, GPIO.HIGH)
         print msg2.value
-        if GPIO.input(pinNumber) == GPIO.HIGH:
-		print 'Open'
-	else:
-		print 'Close'
+#        if GPIO.input(pinNumber) == GPIO.HIGH:
+#		print 'Open'
+#	else:
+#		print 'Close'
 	lc.publish("POD_Anchor", msg2.encode())
 
 subscription=lc.subscribe("POD_Depth", depthControl_handler)

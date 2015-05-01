@@ -24,9 +24,9 @@ i2cBus = smbus.SMBus(1)
 #Take in Servo Value from LCM and drive the Servo
 def servo_handler(channel, data): #Taking Servo Value 
     msg = L15Anchor.decode(data)
-    print 'Servo'
-    print msg.value
-    pwm.ChangeDutyCycle(msg.value)
+    #print 'Servo'
+    #print msg.value
+    #pwm.ChangeDutyCycle(msg.value)
 
 servoThreadState = {"active":True}
 def servo_Thread():
