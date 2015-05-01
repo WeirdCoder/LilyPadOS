@@ -42,7 +42,7 @@ def my_handler(channel, data):
   else:
     pass
   
-  #s.send(json.dumps(dic))
+  s.send(json.dumps(dic))
 
 subDep = lc.subscribe("POD_Depth", my_handler)
 subHum = lc.subscribe("09I2C_HUMIDITY", my_handler)
@@ -51,17 +51,10 @@ subSat = lc.subscribe("POD_LED", my_handler)
 subChar = lc.subscribe("POD_Charge", my_handler)
 subMag = lc.subscribe("POD_Magnet", my_handler)
 
-checker = True
 try:
   while True:
     lc.handle()
-    if (time.time()*5 % 10) >4:
-       if checker:
-           s.send(json.dumps(dic))
-       checker = False
-    else:
-       checker = True
-    #time.sleep(0.05)
+    time.sleep(0.5)
 except KeyboardInterrupt:
   s.close()
 
