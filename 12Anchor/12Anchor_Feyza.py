@@ -8,7 +8,7 @@ from lilylcm import L06Depth
 lc=lcm.LCM()
 idleDepth=0.1
 GPIO.setmode(GPIO.BCM)
-pinNumber=6
+pinNumber=18
 GPIO.setup(pinNumber,GPIO.OUT)
 close= GPIO.LOW
 #closeAngleDuty=33
