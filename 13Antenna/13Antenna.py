@@ -4,37 +4,46 @@
 import lcm
 import time
 from serial import Serial
-from lilylcm import L20CompassHeading
-from lilylcm import L11GPS
-from lilylcm import L13Wind 
+from lilylcm import pod_data_t
 
+# all LCM calls are commented out for time being. Consult AC
 lc = lcm.LCM()
 
-lc.publish("SOME-CHANNEL", msg.encode())
+arduinoComm = Serial('/dev/ttyACM1',9600)#Serial
 
-arduinoComm = Serial('/dev/ttyUSB0',9600)#Serial
+# help on this one... 
 
 try:
     while True:
         #Read data from Arduino
         separator = ','
         readin = arduinoComm.readline()
-        (windDir,windMag,compassHeading,gpsLong, gpsLat) = readin.split(separator)
-        gpsMsg = L11GPS()
-        gpsMsg.latitude = gpsLat
-        gpsMsg.longtitude = gpslong
-        windMsg = L13Wind()
-        windMsg.direction = windDir - compassHeading
-        windMsg.magnitude = windMag
-        compassMsg = L20CompassHeading()
-        compassMsg.direction = compassHeading
-        lc.publish('POD_GPS',gpsMsg.encode())
-        lc.publish('POD_Wind',windMsg.encode())
-        lc.publish('POD_Compass',compassMsg.encode())
-        time.delay(1)
-        
-except Keyboardinterrupt:
+	
+	# in case of faulty data, where fewer than five elements are given
+	if len(readin) >= 5:
+		data = [float(item) for item in readin.split(separator)[0:5]]
+		(compassHeading,windMag,windDir,gpsLat,gpsLong) = data
+	
+		# comment these out for testing, this is for debugging
+		#print 'compass:', compassHeading
+		#print 'wind mag:', windMag
+		#print 'wind dir:', windDir
+		#print 'gpsLat:', gpsLat
+		#print 'gpsLong:', gpsLong
+
+		# subject to change
+		newMsg = pod_data_t()
+		newMsg.gps = [gpsLat, gpsLong]
+		newMsg.pod_heading = compassHeading
+		newMsg.wind_data = [windMag,windDir]
+		newMsg.timestamp = 0.0
+		newMsg.pod_wave_off = 1 # is this 'True' or just 1 / 0
+	
+	lc.publish('POD_ANTENNA',newMsg.encode())
+
+        time.sleep(.1)
+
+except KeyboardInterrupt:
 	pass
-lc.unsubscribe(subscription)
 
 
