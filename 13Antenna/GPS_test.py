@@ -13,7 +13,7 @@ lc = lcm.LCM()
 #lc.publish("SOME-CHANNEL", msg.encode())
 
 # port sometimes changes
-port = '/dev/ttyACM1'
+port = '/dev/ttyACM0'
 delay = .09
 
 arduinoComm = Serial(port,9600)#Serial

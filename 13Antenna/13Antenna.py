@@ -9,8 +9,8 @@ from lilylcm import pod_data_t
 # all LCM calls are commented out for time being. Consult AC
 lc = lcm.LCM()
 
-arduinoComm = Serial('/dev/ttyACM0',9600)#Serial
-print arduinoComm
+arduinoComm = Serial('/dev/ttyACM0',4800)#Serial
+#print arduinoComm
 print 'connected'
 # help on this one... 
 
@@ -25,12 +25,12 @@ try:
 		(compassHeading,windMag,windDir,gpsLat,gpsLong) = data
 	
 		# comment these out for testing, this is for debugging
-		
-		#print 'compass:', compassHeading
-		#print 'wind mag:', windMag
-		#print 'wind dir:', windDir
-		#print 'gpsLat:', gpsLat
-		#print 'gpsLong:', gpsLong
+		print '\n================='
+		print 'compass:', compassHeading
+		print 'wind mag:', windMag
+		print 'wind dir:', windDir
+		print 'gpsLat:', gpsLat
+		print 'gpsLong:', gpsLong
 
 		# subject to change
 		newMsg = pod_data_t()
@@ -40,9 +40,9 @@ try:
 		newMsg.timestamp = 0.0
 		newMsg.pod_wave_off = 1 # is this 'True' or just 1 / 0
 	
-		lc.publish('POD_ANTENNA',newMsg.encode())
+		lc.publish('pod_data',newMsg.encode())
 
-        time.sleep(.1)
+        time.sleep(.9)
 
 except KeyboardInterrupt:
 	pass
