@@ -9,6 +9,7 @@ from lilylcm import L08Temperature
 from lilylcm import L14LEDs
 from lilylcm import L16ChargerCommand
 from lilylcm import L19DockCommand
+from lilylcm import pod_data_t
 
 lc = lcm.LCM()
 
@@ -18,7 +19,7 @@ HOST = '18.111.101.59'
 PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
-dic = {'Hum': 0, 'Temp': 0, 'Dep': 0, 'Sat': 0, 'Charge': 0, 'Mag': 0}
+dic = {'Hum': 0, 'Temp': 0, 'Dep': 0, 'Sat': 0, 'Charge': 0, 'Mag': 0, 'Long': 0, 'Lat': 0, 'Comp': 0, 'WMag': 0, 'WDir': 0}
 
 def my_handler(channel, data):
   if channel == "POD_Depth":
@@ -39,6 +40,13 @@ def my_handler(channel, data):
   elif channel == "POD_Magnet":
     datamsg = L19DockCommand.decode(data)
     dic['Mag'] = datamsg.switchOn
+  elif channel == "pod_data":
+    datamsg = pod_data_t.decode(data)
+    dic['Long'] = datamsg.gps[1]
+    dic['Lat'] = datamsg.gps[0]
+    dic['Comp'] = datamsg.compassHeading
+    dic['WMag'] = datamsg.wind_data[0]
+    dic['WDir'] = datamsg.wind_data[1]
   else:
     pass
   
@@ -50,6 +58,7 @@ subTemp = lc.subscribe("09I2C_TEMP", my_handler)
 subSat = lc.subscribe("POD_LED", my_handler) 
 subChar = lc.subscribe("POD_Charge", my_handler)
 subMag = lc.subscribe("POD_Magnet", my_handler)
+subPod = lc.subscribe("pod_data", my_handler)
 
 try:
   while True:
